@@ -10,10 +10,6 @@ chamado [PsiFacilita](https://github.com/PsiFacilita).
 2. [Requisitos do Sistema](#requisitos-do-sistema)
 3. [Ferramentas Utilizadas](#ferramentas-utilizadas)
 4. [Como Configurar o Ambiente Local](#como-configurar-o-ambiente-local)
-5. [Estrutura do Projeto](#estrutura-do-projeto)
-6. [Como Executar os Testes](#como-executar-os-testes)
-7. [Contribuição](#contribuição)
-8. [Licença](#licença)
 
 ---
 
@@ -40,7 +36,7 @@ chamado [PsiFacilita](https://github.com/PsiFacilita).
 
 ---
 
-# **Como configurar o Ambiente Local
+# **Como configurar o Ambiente Local**
 
 ### **Passo 1: Clonar o Repositório**
 
@@ -95,10 +91,3 @@ java CadastroPaciente
 - **Cadastrar Paciente:** Insira as informações solicitadas
 - **Listar Pacientes:** Visualize a lista de pacientes cadastrados.
 - **Exportar Pacientes:** Gera um arquivo `.txt` contendo os dados dos pacientes.
-
-## **Ferramentas utilizadas**
-
-- **Java 22:** Linguagem de programação.
-- **IntelliJ IDEA:** Ambiente de desenvolvimento integrado.
-- **Git:** Controle de versão
-
