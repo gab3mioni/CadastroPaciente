@@ -1,3 +1,5 @@
+package domain;
+
 public class Paciente {
 
     private final int id;

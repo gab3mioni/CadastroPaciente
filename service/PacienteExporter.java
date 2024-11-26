@@ -1,3 +1,7 @@
+package service;
+
+import domain.Paciente;
+
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;

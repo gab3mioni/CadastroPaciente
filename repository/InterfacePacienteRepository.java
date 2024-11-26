@@ -1,3 +1,7 @@
+package repository;
+
+import domain.Paciente;
+
 import java.util.List;
 
 public interface InterfacePacienteRepository {

@@ -1,3 +1,5 @@
+package domain;
+
 public class PacienteValidator {
 
     public static void validarNome(String nome) {

@@ -1,3 +1,9 @@
+package ui;
+
+import domain.Paciente;
+import repository.InterfacePacienteRepository;
+import service.PacienteExporter;
+
 import java.util.List;
 import java.util.Scanner;
 

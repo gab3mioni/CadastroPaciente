@@ -1,4 +1,7 @@
-import java.util.Scanner;
+package service;
+
+import repository.PacienteRepository;
+import ui.MenuCadastro;
 
 public class CadastroPaciente {
     public static void main(String[] args) {
