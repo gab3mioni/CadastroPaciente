@@ -5,7 +5,6 @@ import domain.Validator.PessoaValidator;
 
 public class Paciente extends Pessoa {
 
-    private final int id;
     private String cpf;
     private String rg;
     private String telefone;
@@ -33,7 +32,7 @@ public class Paciente extends Pessoa {
             String observacoes,
             boolean status
     ) {
-        super(nome, login, senha);
+        super(id, nome, login, senha);
 
         PessoaValidator.validarNome(nomePai);
         PessoaValidator.validarNome(nomeMae);
@@ -45,7 +44,6 @@ public class Paciente extends Pessoa {
         PacienteValidator.validarCampo(escolaridade);
         PacienteValidator.validarCampo(curso);
 
-        this.id = id;
         this.cpf = cpf;
         this.rg = rg;
         this.telefone = telefone;
@@ -56,10 +54,6 @@ public class Paciente extends Pessoa {
         this.nomeMae = nomeMae;
         this.observacoes = observacoes;
         this.status = status;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public String getCpf() {

@@ -4,18 +4,24 @@ import domain.Validator.PessoaValidator;
 
 public class Pessoa {
 
+    private final int id;
     private String nome;
     private String login;
     private String senha;
 
-    public Pessoa(String nome, String login, String senha) {
+    public Pessoa(int id, String nome, String login, String senha) {
         PessoaValidator.validarNome(nome);
         PessoaValidator.validarLogin(login);
         PessoaValidator.validarSenha(senha);
 
+        this.id = id;
         this.nome = nome;
         this.login = login;
         this.senha = senha;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getNome() {

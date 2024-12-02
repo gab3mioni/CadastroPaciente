@@ -7,8 +7,8 @@ public class Psicologo extends Pessoa {
     private String crp;
     private String especialidade;
 
-    public Psicologo(String nome, String login, String senha, String crp, String especialidade) {
-        super(nome, login, senha);
+    public Psicologo(int id, String nome, String login, String senha, String crp, String especialidade) {
+        super(id, nome, login, senha);
         PsicologoValidator.validarCrp(crp);
         PsicologoValidator.validarEspecialidade(especialidade);
         this.crp = crp;
