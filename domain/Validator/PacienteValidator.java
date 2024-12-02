@@ -1,12 +1,6 @@
-package domain;
+package domain.Validator;
 
 public class PacienteValidator {
-
-    public static void validarNome(String nome) {
-        if (nome == null || nome.trim().isEmpty()) {
-            throw new IllegalArgumentException("Nome não pode ser vazio.");
-        }
-    }
 
     public static void validarCpf(String cpf) {
         if (cpf == null || cpf.length() != 11) {
@@ -31,4 +25,5 @@ public class PacienteValidator {
             throw new IllegalArgumentException("O campo não pode ser vazio.");
         }
     }
+    
 }
