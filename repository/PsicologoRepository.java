@@ -1,35 +1,35 @@
 package repository;
 
-import domain.Paciente;
+import domain.Psicologo;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PacienteRepository implements InterfaceRepository<Paciente> {
+public class PsicologoRepository implements InterfaceRepository<Psicologo> {
 
-    private final List<Paciente> pacientes = new ArrayList<>();
+    private final List<Psicologo> psicologos = new ArrayList<>();
 
     @Override
-    public void adicionar(Paciente paciente) {
-        pacientes.add(paciente);
+    public void adicionar(Psicologo psicologo) {
+        psicologos.add(psicologo);
     }
 
     @Override
-    public List<Paciente> listar() {
-        return new ArrayList<>(pacientes);
+    public List<Psicologo> listar() {
+        return new ArrayList<>(psicologos);
     }
 
     @Override
-    public Paciente buscarPorId(int id) {
-        return pacientes.stream()
-                .filter(paciente -> paciente.getId() == id)
+    public Psicologo buscarPorId(int id) {
+        return psicologos.stream()
+                .filter(psicologo -> psicologo.getId() == id)
                 .findFirst()
                 .orElse(null);
     }
 
     @Override
     public int getProximoId() {
-        return pacientes.size() + 1;
+        return psicologos.size() + 1;
     }
 
     @Override
@@ -42,5 +42,4 @@ public class PacienteRepository implements InterfaceRepository<Paciente> {
         String primeiroNome = getPrimeiroNome(nome);
         return primeiroNome.substring(0, 1).toLowerCase() + primeiroNome.substring(1);
     }
-    
 }
