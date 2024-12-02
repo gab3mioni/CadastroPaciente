@@ -179,8 +179,9 @@ public class Menu {
 
     public void exportarPacientes() {
         List<Paciente> pacientes = pacienteRepository.listar();
+        String diretorio = "../";
         String nomeArquivo = "pacientes.txt";
 
-        PacienteExporter.exportarPacientesParaTxt(pacientes, nomeArquivo);
+        PacienteExporter.exportarPacientesParaTxt(pacientes, nomeArquivo, diretorio);
     }
 }
