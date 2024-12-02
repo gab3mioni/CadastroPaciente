@@ -32,4 +32,15 @@ public class PacienteRepository implements InterfacePacienteRepository {
         return pacientes.size() + 1;
     }
 
+    @Override
+    public String getPrimeiroNome(String nome) {
+        return nome.split(" ")[0];
+    }
+    
+    @Override
+    public String getNewLogin(String nome) {
+        String primeiroNome = getPrimeiroNome(nome);
+        return primeiroNome.substring(0, 1).toLowerCase() + primeiroNome.substring(1);
+    }
+
 }
