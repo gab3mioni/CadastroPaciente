@@ -1,9 +1,11 @@
 package domain;
 
-public class Paciente {
+import domain.Validator.PacienteValidator;
+import domain.Validator.PessoaValidator;
+
+public class Paciente extends Pessoa {
 
     private final int id;
-    private String nome;
     private String cpf;
     private String rg;
     private String telefone;
@@ -18,6 +20,8 @@ public class Paciente {
     public Paciente(
             int id,
             String nome,
+            String login,
+            String senha,
             String cpf,
             String rg,
             String telefone,
@@ -29,18 +33,19 @@ public class Paciente {
             String observacoes,
             boolean status
     ) {
-        PacienteValidator.validarNome(nome);
+        super(nome, login, senha);
+
+        PessoaValidator.validarNome(nomePai);
+        PessoaValidator.validarNome(nomeMae);
+
         PacienteValidator.validarCpf(cpf);
         PacienteValidator.validarRg(rg);
         PacienteValidator.validarTelefone(telefone);
         PacienteValidator.validarCampo(trabalho);
         PacienteValidator.validarCampo(escolaridade);
         PacienteValidator.validarCampo(curso);
-        PacienteValidator.validarNome(nomePai);
-        PacienteValidator.validarNome(nomeMae);
 
         this.id = id;
-        this.nome = nome;
         this.cpf = cpf;
         this.rg = rg;
         this.telefone = telefone;
@@ -55,10 +60,6 @@ public class Paciente {
 
     public int getId() {
         return id;
-    }
-
-    public String getNome() {
-        return nome;
     }
 
     public String getCpf() {
@@ -101,11 +102,6 @@ public class Paciente {
         return status;
     }
 
-    public void setNome(String nome) {
-        PacienteValidator.validarNome(nome);
-        this.nome = nome;
-    }
-
     public void setCpf(String cpf) {
         PacienteValidator.validarCpf(cpf);
         this.cpf = cpf;
@@ -137,12 +133,12 @@ public class Paciente {
     }
 
     public void setNomePai(String nomePai) {
-        PacienteValidator.validarNome(nomePai);
+        PessoaValidator.validarNome(nomePai);
         this.nomePai = nomePai;
     }
 
     public void setNomeMae(String nomeMae) {
-        PacienteValidator.validarNome(nomeMae);
+        PessoaValidator.validarNome(nomeMae);
         this.nomeMae = nomeMae;
     }
 
