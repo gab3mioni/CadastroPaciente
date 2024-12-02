@@ -11,7 +11,14 @@ public class CadastroPaciente {
         PacienteRepository repository = new PacienteRepository();
         Menu menu = new Menu(repository);
 
-        Psicologo Janaina = new Psicologo("Janaina", "janaina", "senhaTeste123@", "1234567891", "TCC");
+        Psicologo Janaina = new Psicologo(
+            "Janaina", 
+            "janaina", 
+            "senhaTeste123@", 
+            "12345678", 
+            "TCC"
+        );
+            
         Paciente Joao = new Paciente(
             1,                     
             "João",                
