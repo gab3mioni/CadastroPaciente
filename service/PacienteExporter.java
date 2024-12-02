@@ -9,8 +9,12 @@ import java.util.List;
 
 public class PacienteExporter {
 
-    public static void exportarPacientesParaTxt(List<Paciente> pacientes, String nomeArquivo) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(nomeArquivo))) {
+    public static void exportarPacientesParaTxt(
+        List<Paciente> pacientes, 
+        String nomeArquivo,
+        String diretorio
+        ) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(diretorio + nomeArquivo))) {
             if (pacientes.isEmpty()) {
                 writer.write("Nenhum paciente cadastrado.");
             } else {
@@ -26,8 +30,8 @@ public class PacienteExporter {
                     writer.write("Nome do Pai: " + paciente.getNomePai() + "\n");
                     writer.write("Nome da Mãe: " + paciente.getNomeMae() + "\n");
                     writer.write("Observações: " + paciente.getObservacoes() + "\n");
-                    writer.write("Status: " + (paciente.getStatus() ? "Ativo" : "Inativo") + "\n");
-                    writer.write("----------------------------------\n");
+                    writer.write("Status: " + (paciente.getStatus() ? "Ativo" : "Inativo"));
+                    writer.write("\n----------------------------------\n");
                 }
             }
             System.out.println("Lista de pacientes exportada com sucesso para o arquivo: " + nomeArquivo);
