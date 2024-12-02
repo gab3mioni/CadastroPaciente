@@ -4,15 +4,25 @@ import domain.Paciente;
 import domain.Psicologo;
 import repository.InterfaceRepository;
 import service.PacienteExporter;
-
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Classe responsável pela interface do usuário e exibição dos menus do sistema de gestão PsiFacilita.
+ * Oferece funcionalidades para autenticação de psicólogos, cadastro de pacientes, listagem de pacientes,
+ * exportação de dados dos pacientes para um arquivo e visualização de psicólogos cadastrados.
+ */
 public class Menu {
 
     private final InterfaceRepository<Paciente> pacienteRepository;
     private final InterfaceRepository<Psicologo> psicologoRepository;
 
+    /**
+     * Constrói um objeto Menu com os repositórios de pacientes e psicólogos.
+     * 
+     * @param pacienteRepository Repositório responsável pelas operações de persistência dos pacientes.
+     * @param psicologoRepository Repositório responsável pelas operações de persistência dos psicólogos.
+     */
     public Menu(
             InterfaceRepository<Paciente> pacienteRepository,
             InterfaceRepository<Psicologo> psicologoRepository) {
@@ -20,6 +30,10 @@ public class Menu {
         this.psicologoRepository = psicologoRepository;
     }
 
+    /**
+     * Exibe a tela de login e autentica o psicólogo no sistema.
+     * O usuário deve inserir o login e senha para acessar o menu principal.
+     */
     public void exibirLogin() {
         Scanner leia = new Scanner(System.in);
         String login;
@@ -47,11 +61,23 @@ public class Menu {
         leia.close();
     }
 
+    /**
+     * Realiza a autenticação do psicólogo com o login e senha fornecidos.
+     * 
+     * @param login O login do psicólogo.
+     * @param senha A senha do psicólogo.
+     * @return true se o login e senha forem válidos, caso contrário, false.
+     */
     public boolean autenticar(String login, String senha) {
         return psicologoRepository.listar().stream()
                 .anyMatch(usuario -> usuario.getLogin().equals(login) && usuario.getSenha().equals(senha));
     }
 
+    /**
+     * Exibe o menu principal após o login bem-sucedido.
+     * O menu oferece opções para cadastrar pacientes, listar pacientes,
+     * exportar pacientes para um arquivo e sair do sistema.
+     */
     public void exibirMenu() {
         Scanner leia = new Scanner(System.in);
 
@@ -81,6 +107,12 @@ public class Menu {
         leia.close();
     }
 
+    /**
+     * Realiza o cadastro de um novo paciente no sistema.
+     * As informações do paciente são solicitadas ao usuário e registradas no repositório.
+     * 
+     * @param leia O objeto Scanner usado para ler as entradas do usuário.
+     */
     public void cadastrarPaciente(Scanner leia) {
 
         int id = pacienteRepository.getProximoId();
@@ -138,6 +170,10 @@ public class Menu {
         System.out.println("Paciente cadastrado com sucesso!");
     }
 
+    /**
+     * Exibe a lista de pacientes cadastrados no sistema.
+     * Caso não haja pacientes, uma mensagem informando a ausência de registros é exibida.
+     */
     public void listarPacientes() {
         List<Paciente> pacientes = pacienteRepository.listar();
         if (pacientes.isEmpty()) {
@@ -160,6 +196,10 @@ public class Menu {
         }
     }
 
+    /**
+     * Exibe a lista de psicólogos cadastrados no sistema.
+     * Caso não haja psicólogos, uma mensagem informando a ausência de registros é exibida.
+     */
     public void listarPsicologos() {
         List<Psicologo> psicologos = psicologoRepository.listar();
         if (psicologos.isEmpty()) {
@@ -177,6 +217,10 @@ public class Menu {
         }
     }
 
+    /**
+     * Exporta a lista de pacientes cadastrados para um arquivo de texto.
+     * O arquivo gerado contém todas as informações dos pacientes registrados no sistema.
+     */
     public void exportarPacientes() {
         List<Paciente> pacientes = pacienteRepository.listar();
         String diretorio = "../";
