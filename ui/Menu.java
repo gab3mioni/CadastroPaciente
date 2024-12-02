@@ -1,7 +1,8 @@
 package ui;
 
 import domain.Paciente;
-import repository.InterfacePacienteRepository;
+import domain.Psicologo;
+import repository.InterfaceRepository;
 import service.PacienteExporter;
 
 import java.util.List;
@@ -9,16 +10,21 @@ import java.util.Scanner;
 
 public class Menu {
 
-    private final InterfacePacienteRepository repository;
+    private final InterfaceRepository<Paciente> pacienteRepository;
+    private final InterfaceRepository<Psicologo> psicologoRepository;
 
-    public Menu(InterfacePacienteRepository repository) {
-        this.repository = repository;
+    public Menu(
+            InterfaceRepository<Paciente> pacienteRepository,
+            InterfaceRepository<Psicologo> psicologoRepository) {
+        this.pacienteRepository = pacienteRepository;
+        this.psicologoRepository = psicologoRepository;
     }
 
     public void exibirLogin() {
         Scanner leia = new Scanner(System.in);
-        String login = "";
-        String senha = "";
+        String login;
+        String senha;
+        boolean autenticado;
 
         do {
             System.out.println("\n--------------------");
@@ -28,16 +34,22 @@ public class Menu {
             System.out.print("Senha: ");
             senha = leia.nextLine();
 
-            if (login.equals("janaina") && senha.equals("senhaTeste123@")) {
+            autenticado = this.autenticar(login, senha);
+
+            if (autenticado) {
                 System.out.println("\n\tLogin efetuado com sucesso.\n");
                 exibirMenu();
             } else {
                 System.out.println("\n\tLogin ou senha inválidos.\n");
             }
-
-        } while ( !login.equals("janaina") && !senha.equals("senhaTeste123@") );
+        } while (!autenticado);
 
         leia.close();
+    }
+
+    public boolean autenticar(String login, String senha) {
+        return psicologoRepository.listar().stream()
+                .anyMatch(usuario -> usuario.getLogin().equals(login) && usuario.getSenha().equals(senha));
     }
 
     public void exibirMenu() {
@@ -71,12 +83,12 @@ public class Menu {
 
     public void cadastrarPaciente(Scanner leia) {
 
-        int id = repository.getProximoId();
+        int id = pacienteRepository.getProximoId();
 
         System.out.print("Nome: ");
         String nome = leia.nextLine();
 
-        String login = repository.getNewLogin(nome);
+        String login = pacienteRepository.getNewLogin(nome);
         String senha = "Senha@ParaAlterar123";
 
         System.out.print("CPF: ");
@@ -120,22 +132,21 @@ public class Menu {
                 nomePai,
                 nomeMae,
                 observacoes,
-                true
-        );
+                true);
 
-        repository.adicionarPaciente(paciente);
+        pacienteRepository.adicionar(paciente);
         System.out.println("Paciente cadastrado com sucesso!");
     }
 
     public void listarPacientes() {
-        List<Paciente> pacientes = repository.listarPacientes();
-        if(pacientes.isEmpty()) {
+        List<Paciente> pacientes = pacienteRepository.listar();
+        if (pacientes.isEmpty()) {
             System.out.println("\n\tNenhum paciente cadastrado.\n");
         }
         for (Paciente paciente : pacientes) {
             System.out.println("Lista de Paciente");
             System.out.println(
-                            "\nID: " + paciente.getId() +
+                    "\nID: " + paciente.getId() +
                             "\nNome: " + paciente.getNome() +
                             "\nCPF: " + paciente.getCpf() +
                             "\nRG: " + paciente.getRg() +
@@ -145,13 +156,29 @@ public class Menu {
                             "\nCurso: " + paciente.getCurso() +
                             "\nNome do Pai: " + paciente.getNomePai() +
                             "\nNome da mãe: " + paciente.getNomeMae() +
-                            "\nObservações: " + paciente.getObservacoes()
-            );
+                            "\nObservações: " + paciente.getObservacoes());
+        }
+    }
+
+    public void listarPsicologos() {
+        List<Psicologo> psicologos = psicologoRepository.listar();
+        if (psicologos.isEmpty()) {
+            System.out.println("\n\tNenhum psicólogo cadastrado.\n");
+            return;
+        }
+
+        System.out.println("Lista de Psicólogos:");
+        for (Psicologo psicologo : psicologos) {
+            System.out.println(
+                    "\nID: " + psicologo.getId() +
+                            "\nNome: " + psicologo.getNome() +
+                            "\nCRP: " + psicologo.getCrp() +
+                            "\nEspecialidade: " + psicologo.getEspecialidade());
         }
     }
 
     public void exportarPacientes() {
-        List<Paciente> pacientes = repository.listarPacientes();
+        List<Paciente> pacientes = pacienteRepository.listar();
         String nomeArquivo = "pacientes.txt";
 
         PacienteExporter.exportarPacientesParaTxt(pacientes, nomeArquivo);
