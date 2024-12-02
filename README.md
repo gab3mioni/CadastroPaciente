@@ -59,24 +59,33 @@ Certifique-se de que a estrutura do projeto segue o padrão:
 ```css
 CadastroPaciente/
 ├── domain/
+│   ├── Validator/
+│   │   ├── PacienteValidator.java
+│   │   ├── PessoaValidator.java
+│   │   ├── PsicologoValidator.java
 │   ├── Paciente.java
-│   └── PacienteValidator.java
+│   └── Pessoa.java
+│   └── Psicologo.java
 ├── repository/
-│   ├── InterfacePacienteRepository.java
+│   ├── InterfaceRepository.java
 │   ├── PacienteRepository.java
+│   ├── PsicologoRepository.java
 ├── service/
 │   └── CadastroPaciente.java
 │   └── PacienteExporter.java
 └── ui/
-│   └── MenuCadastro.java
+│   └── Menu.java
 └── .gitignore
 └── README.md
 ```
 
-- `domain/`: Contém classes relacionadas ao modelo de domínio do sistema. Ela encapsula a lógica de validação e estrutura os dados principais.
-- `repository/`: Centraliza a persistência dos dados, com abstrações para gerenciar a lista de pacientes. 
-- `validator/`: Contém classes que implementam a lógica de negócios do sistema, interagindo com o repositório e facilitando operações complexas.
-- `ui/`: Contém classes que fornecem um menu interativo para o usuário.
+- **`domain/`**: Contém as classes de modelo de dados do sistema, representando as entidades principais, como `Paciente`, `Pessoa` e `Psicologo`. Além disso, inclui a pasta `Validator/` que contém classes de validação específicas para as entidades, como `PacienteValidator`, `PessoaValidator` e `PsicologoValidator`, responsáveis por validar as informações antes de serem processadas.
+
+- **`repository/`**: Armazena classes responsáveis pela persistência dos dados. O `InterfaceRepository` define a interface comum para repositórios de entidades, enquanto `PacienteRepository` e `PsicologoRepository` implementam essa interface para gerenciar as listas de pacientes e psicólogos, respectivamente.
+
+- **`service/`**: Contém classes que implementam a lógica de negócio do sistema. A classe `CadastroPaciente` gerencia o fluxo de cadastro de pacientes, enquanto `PacienteExporter` é responsável pela exportação dos dados dos pacientes para um arquivo.
+
+- **`ui/`**: Esta pasta contém a classe `Menu`, que oferece uma interface de linha de comando (CLI) para o usuário interagir com o sistema, permitindo funcionalidades como cadastro, listagem e exportação de pacientes.
 
 ### **Passo 4: Executar o programa**
 
