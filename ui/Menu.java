@@ -15,6 +15,31 @@ public class Menu {
         this.repository = repository;
     }
 
+    public void exibirLogin() {
+        Scanner leia = new Scanner(System.in);
+        String login = "";
+        String senha = "";
+
+        do {
+            System.out.println("\n--------------------");
+            System.out.println("PsiFacilita - Sistema de Gestão");
+            System.out.print("Login: ");
+            login = leia.nextLine();
+            System.out.print("Senha: ");
+            senha = leia.nextLine();
+
+            if (login.equals("janaina") && senha.equals("senhaTeste123@")) {
+                System.out.println("\n\tLogin efetuado com sucesso.\n");
+                exibirMenu();
+            } else {
+                System.out.println("\n\tLogin ou senha inválidos.\n");
+            }
+
+        } while ( !login.equals("janaina") && !senha.equals("senhaTeste123@") );
+
+        leia.close();
+    }
+
     public void exibirMenu() {
         Scanner leia = new Scanner(System.in);
 
