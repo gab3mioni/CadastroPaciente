@@ -7,11 +7,11 @@ import service.PacienteExporter;
 import java.util.List;
 import java.util.Scanner;
 
-public class MenuCadastro {
+public class Menu {
 
     private final InterfacePacienteRepository repository;
 
-    public MenuCadastro(InterfacePacienteRepository repository) {
+    public Menu(InterfacePacienteRepository repository) {
         this.repository = repository;
     }
 
@@ -51,6 +51,9 @@ public class MenuCadastro {
         System.out.print("Nome: ");
         String nome = leia.nextLine();
 
+        String login = repository.getNewLogin(nome);
+        String senha = "Senha@ParaAlterar123";
+
         System.out.print("CPF: ");
         String cpf = leia.nextLine();
 
@@ -81,6 +84,8 @@ public class MenuCadastro {
         Paciente paciente = new Paciente(
                 id,
                 nome,
+                login,
+                senha,
                 cpf,
                 rg,
                 telefone,
