@@ -9,4 +9,6 @@ public interface InterfacePacienteRepository {
     List<Paciente> listarPacientes();
     Paciente buscarPacientePorId(int id);
     int getProximoId();
+    String getPrimeiroNome(String nome);
+    String getNewLogin(String nome);
 }
