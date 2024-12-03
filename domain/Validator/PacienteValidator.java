@@ -24,11 +24,11 @@ public class PacienteValidator {
      * O RG deve ter exatamente 10 dígitos, não pode ser nulo ou vazio.
      *
      * @param rg o RG a ser validado.
-     * @throws IllegalArgumentException se o RG for nulo, vazio ou não tiver 10 dígitos.
+     * @throws IllegalArgumentException se o RG for nulo ou vazio.
      */
     public static void validarRg(String rg) {
-        if (rg == null || rg.trim().isEmpty() || rg.length() != 10) {
-            throw new IllegalArgumentException("RG deve ter 10 dígitos.");
+        if (rg == null || rg.trim().isEmpty()) {
+            throw new IllegalArgumentException("RG não pode ser vazio.");
         }
     }
 
