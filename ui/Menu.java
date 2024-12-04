@@ -4,13 +4,17 @@ import domain.Paciente;
 import domain.Psicologo;
 import repository.InterfaceRepository;
 import service.PacienteExporter;
+import service.PacienteReader;
 import java.util.List;
 import java.util.Scanner;
 
 /**
- * Classe responsável pela interface do usuário e exibição dos menus do sistema de gestão PsiFacilita.
- * Oferece funcionalidades para autenticação de psicólogos, cadastro de pacientes, listagem de pacientes,
- * exportação de dados dos pacientes para um arquivo e visualização de psicólogos cadastrados.
+ * Classe responsável pela interface do usuário e exibição dos menus do sistema
+ * de gestão PsiFacilita.
+ * Oferece funcionalidades para autenticação de psicólogos, cadastro de
+ * pacientes, listagem de pacientes,
+ * exportação de dados dos pacientes para um arquivo e visualização de
+ * psicólogos cadastrados.
  */
 public class Menu {
 
@@ -20,8 +24,10 @@ public class Menu {
     /**
      * Constrói um objeto Menu com os repositórios de pacientes e psicólogos.
      * 
-     * @param pacienteRepository Repositório responsável pelas operações de persistência dos pacientes.
-     * @param psicologoRepository Repositório responsável pelas operações de persistência dos psicólogos.
+     * @param pacienteRepository  Repositório responsável pelas operações de
+     *                            persistência dos pacientes.
+     * @param psicologoRepository Repositório responsável pelas operações de
+     *                            persistência dos psicólogos.
      */
     public Menu(
             InterfaceRepository<Paciente> pacienteRepository,
@@ -88,8 +94,9 @@ public class Menu {
             System.out.println("PsiFacilita - Sistema de Gestão");
             System.out.println("1. Cadastrar paciente");
             System.out.println("2. Listar paciente");
-            System.out.println("3. Exportar pacientes para arquivo");
-            System.out.println("4. Sair");
+            System.out.println("3. Importar pacientes de arquivo");
+            System.out.println("4. Exportar pacientes para arquivo");
+            System.out.println("5. Sair");
             System.out.println("--------------------");
             System.out.print("\n\tEscolha uma opção: ");
             opcao = leia.nextInt();
@@ -98,18 +105,20 @@ public class Menu {
             switch (opcao) {
                 case 1 -> cadastrarPaciente(leia);
                 case 2 -> listarPacientes();
-                case 3 -> exportarPacientes();
-                case 4 -> System.out.println("\n\tSaindo...\n");
+                case 3 -> importarPacientes();
+                case 4 -> exportarPacientes();
+                case 5 -> System.out.println("\n\tSaindo...\n");
                 default -> System.out.println("\n\tOpção inválida.\n");
             }
-        } while (opcao != 4);
+        } while (opcao != 5);
 
         leia.close();
     }
 
     /**
      * Realiza o cadastro de um novo paciente no sistema.
-     * As informações do paciente são solicitadas ao usuário e registradas no repositório.
+     * As informações do paciente são solicitadas ao usuário e registradas no
+     * repositório.
      * 
      * @param leia O objeto Scanner usado para ler as entradas do usuário.
      */
@@ -172,7 +181,8 @@ public class Menu {
 
     /**
      * Exibe a lista de pacientes cadastrados no sistema.
-     * Caso não haja pacientes, uma mensagem informando a ausência de registros é exibida.
+     * Caso não haja pacientes, uma mensagem informando a ausência de registros é
+     * exibida.
      */
     public void listarPacientes() {
         List<Paciente> pacientes = pacienteRepository.listar();
@@ -198,7 +208,8 @@ public class Menu {
 
     /**
      * Exibe a lista de psicólogos cadastrados no sistema.
-     * Caso não haja psicólogos, uma mensagem informando a ausência de registros é exibida.
+     * Caso não haja psicólogos, uma mensagem informando a ausência de registros é
+     * exibida.
      */
     public void listarPsicologos() {
         List<Psicologo> psicologos = psicologoRepository.listar();
@@ -219,7 +230,8 @@ public class Menu {
 
     /**
      * Exporta a lista de pacientes cadastrados para um arquivo de texto.
-     * O arquivo gerado contém todas as informações dos pacientes registrados no sistema.
+     * O arquivo gerado contém todas as informações dos pacientes registrados no
+     * sistema.
      */
     public void exportarPacientes() {
         List<Paciente> pacientes = pacienteRepository.listar();
@@ -228,4 +240,43 @@ public class Menu {
 
         PacienteExporter.exportarPacientesParaTxt(pacientes, nomeArquivo, diretorio);
     }
+
+    /**
+     * Verifica se um paciente com o CPF informado já existe no repositório.
+     * 
+     * @param cpf o CPF do paciente a ser verificado
+     * @return {@code true} se o paciente com o CPF informado já existir no
+     *         repositório, caso contrário {@code false}
+     */
+    private boolean pacienteJaExiste(String cpf) {
+        return pacienteRepository.listar().stream()
+                .anyMatch(paciente -> paciente.getCpf().equals(cpf));
+    }
+
+    /**
+     * Importa pacientes a partir de um arquivo de texto e os adiciona ao
+     * repositório,
+     * caso não existam já no sistema.
+     * 
+     * O arquivo de texto deve estar localizado no diretório informado e o nome do
+     * arquivo é
+     * pré-definido como "pacientes.txt". Para cada paciente no arquivo, o método
+     * verifica se o
+     * paciente já está registrado no repositório antes de adicionar.
+     * 
+     * Após a importação, é exibida uma mensagem de sucesso na consola.
+     */
+    public void importarPacientes() {
+        String nomeArquivo = "pacientes.txt";
+        String diretorio = "../";
+
+        for (Paciente novoPaciente : PacienteReader.lerPacientesDeTxt(nomeArquivo, diretorio)) {
+            if (!pacienteJaExiste(novoPaciente.getCpf())) {
+                pacienteRepository.adicionar(novoPaciente);
+            }
+        }
+
+        System.out.println("\n\tPaciente(s) importado(s) com sucesso!\n");
+    }
+
 }
