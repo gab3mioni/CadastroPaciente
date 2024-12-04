@@ -73,6 +73,7 @@ CadastroPaciente/
 ├── service/
 │   └── CadastroPaciente.java
 │   └── PacienteExporter.java
+│   └── PacienteReader.java
 └── ui/
 │   └── Menu.java
 └── .gitignore
@@ -83,7 +84,7 @@ CadastroPaciente/
 
 - **`repository/`**: Armazena classes responsáveis pela persistência dos dados. O `InterfaceRepository` define a interface comum para repositórios de entidades, enquanto `PacienteRepository` e `PsicologoRepository` implementam essa interface para gerenciar as listas de pacientes e psicólogos, respectivamente.
 
-- **`service/`**: Contém classes que implementam a lógica de negócio do sistema. A classe `CadastroPaciente` gerencia o fluxo de cadastro de pacientes, enquanto `PacienteExporter` é responsável pela exportação dos dados dos pacientes para um arquivo.
+- **`service/`**: Contém classes que implementam a lógica de negócio do sistema. A classe `CadastroPaciente` gerencia o fluxo de cadastro de pacientes, enquanto `PacienteExporter` é responsável pela exportação dos dados dos pacientes para um arquivo e `PacienteReader` é responsável pela leitura dos dados exportados em um arquivo.
 
 - **`ui/`**: Esta pasta contém a classe `Menu`, que oferece uma interface de linha de comando (CLI) para o usuário interagir com o sistema, permitindo funcionalidades como cadastro, listagem e exportação de pacientes.
 
