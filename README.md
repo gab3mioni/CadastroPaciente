@@ -18,6 +18,7 @@ chamado [PsiFacilita](https://github.com/PsiFacilita).
 - **Cadastro de Pacientes:** Cadastre informações de um paciente como nome, CPF, RG, telefone, entre outros.
 - **Listagem de Pacientes:** Visualize a lista de pacientes cadastrados.
 - **Exportação de dados:** Exporte a lista de pacientes registrados em um arquivo com extensão `.txt`.
+- **Importação de dados:** Importa a lista de pacientes registrados em um arquivo com extensão `.txt`.
 
 ---
 
@@ -41,7 +42,7 @@ chamado [PsiFacilita](https://github.com/PsiFacilita).
 ### **Passo 1: Clonar o Repositório**
 
 Certifique-se de ter o Git instalado em sua máquina. Clone o repositório executando o comando:
-
+ 
 ```bash
 git clone https://github.com/gab3mioni/CadastroPaciente.git
 ```
@@ -63,6 +64,7 @@ CadastroPaciente/
 │   │   ├── PacienteValidator.java
 │   │   ├── PessoaValidator.java
 │   │   ├── PsicologoValidator.java
+│   │   ├── ValidationException.java
 │   ├── Paciente.java
 │   └── Pessoa.java
 │   └── Psicologo.java
@@ -80,7 +82,7 @@ CadastroPaciente/
 └── README.md
 ```
 
-- **`domain/`**: Contém as classes de modelo de dados do sistema, representando as entidades principais, como `Paciente`, `Pessoa` e `Psicologo`. Além disso, inclui a pasta `Validator/` que contém classes de validação específicas para as entidades, como `PacienteValidator`, `PessoaValidator` e `PsicologoValidator`, responsáveis por validar as informações antes de serem processadas.
+- **`domain/`**: Contém as classes de modelo de dados do sistema, representando as entidades principais, como `Paciente`, `Pessoa` e `Psicologo`. Além disso, inclui a pasta `Validator/` que contém classes de validação específicas para as entidades, como `PacienteValidator`, `PessoaValidator` e `PsicologoValidator`, responsáveis por validar as informações antes de serem processadas, além das validações, possuem a clases `ValidationException`, uma exceção personalizada para sinalizar falha nas validações do sistema.
 
 - **`repository/`**: Armazena classes responsáveis pela persistência dos dados. O `InterfaceRepository` define a interface comum para repositórios de entidades, enquanto `PacienteRepository` e `PsicologoRepository` implementam essa interface para gerenciar as listas de pacientes e psicólogos, respectivamente.
 
