@@ -47,20 +47,29 @@ public class Menu {
         boolean autenticado;
 
         do {
-            System.out.println("\n--------------------");
-            System.out.println("PsiFacilita - Sistema de Gestão");
-            System.out.print("Login: ");
-            login = leia.nextLine();
-            System.out.print("Senha: ");
-            senha = leia.nextLine();
+            try {
+                System.out.println("\n--------------------");
+                System.out.println("PsiFacilita - Sistema de Gestão");
+                System.out.print("Login: ");
+                login = leia.nextLine();
 
-            autenticado = this.autenticar(login, senha);
+                System.out.print("Senha: ");
+                senha = leia.nextLine();
 
-            if (autenticado) {
-                System.out.println("\n\tLogin efetuado com sucesso.\n");
-                exibirMenu();
-            } else {
-                System.out.println("\n\tLogin ou senha inválidos.\n");
+                autenticado = this.autenticar(login, senha);
+
+                if (autenticado) {
+                    System.out.println("\n\tLogin efetuado com sucesso.\n");
+                    exibirMenu();
+                } else {
+                    System.out.println("\n\tLogin ou senha inválidos.\n");
+                }
+            } catch (IllegalArgumentException e) {
+                System.out.println("\nErro: " + e.getMessage());
+                autenticado = false;
+            } catch (Exception e) {
+                System.out.println("\nOcorreu um erro inesperado: " + e.getMessage());
+                autenticado = false;
             }
         } while (!autenticado);
 
@@ -75,8 +84,12 @@ public class Menu {
      * @return true se o login e senha forem válidos, caso contrário, false.
      */
     public boolean autenticar(String login, String senha) {
-        return psicologoRepository.listar().stream()
-                .anyMatch(usuario -> usuario.getLogin().equals(login) && usuario.getSenha().equals(senha));
+        try {
+            return psicologoRepository.listar().stream()
+                    .anyMatch(usuario -> usuario.getLogin().equals(login) && usuario.getSenha().equals(senha));
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     /**
@@ -87,28 +100,34 @@ public class Menu {
     public void exibirMenu() {
         Scanner leia = new Scanner(System.in);
 
-        int opcao;
+        int opcao = 0;
 
         do {
-            System.out.println("\n--------------------");
-            System.out.println("PsiFacilita - Sistema de Gestão");
-            System.out.println("1. Cadastrar paciente");
-            System.out.println("2. Listar paciente");
-            System.out.println("3. Importar pacientes de arquivo");
-            System.out.println("4. Exportar pacientes para arquivo");
-            System.out.println("5. Sair");
-            System.out.println("--------------------");
-            System.out.print("\n\tEscolha uma opção: ");
-            opcao = leia.nextInt();
-            leia.nextLine();
+            try {
+                System.out.println("\n--------------------");
+                System.out.println("PsiFacilita - Sistema de Gestão");
+                System.out.println("1. Cadastrar paciente");
+                System.out.println("2. Listar paciente");
+                System.out.println("3. Importar pacientes de arquivo");
+                System.out.println("4. Exportar pacientes para arquivo");
+                System.out.println("5. Sair");
+                System.out.println("--------------------");
+                System.out.print("\n\tEscolha uma opção: ");
+                opcao = leia.nextInt();
 
-            switch (opcao) {
-                case 1 -> cadastrarPaciente(leia);
-                case 2 -> listarPacientes();
-                case 3 -> importarPacientes();
-                case 4 -> exportarPacientes();
-                case 5 -> System.out.println("\n\tSaindo...\n");
-                default -> System.out.println("\n\tOpção inválida.\n");
+                // leia.nextLine();
+
+                switch (opcao) {
+                    case 1 -> cadastrarPaciente(leia);
+                    case 2 -> listarPacientes();
+                    case 3 -> importarPacientes();
+                    case 4 -> exportarPacientes();
+                    case 5 -> System.out.println("\n\tSaindo...\n");
+                    default -> System.out.println("\n\tOpção inválida.\n");
+                }
+            } catch (Exception e) {
+                System.out.println("\n\tOpção inválida\n");
+                leia = new Scanner(System.in);
             }
         } while (opcao != 5);
 
@@ -159,24 +178,28 @@ public class Menu {
         System.out.print("Observações: ");
         String observacoes = leia.nextLine();
 
-        Paciente paciente = new Paciente(
-                id,
-                nome,
-                login,
-                senha,
-                cpf,
-                rg,
-                telefone,
-                trabalho,
-                escolaridade,
-                curso,
-                nomePai,
-                nomeMae,
-                observacoes,
-                true);
+        try {
+            Paciente paciente = new Paciente(
+                    id,
+                    nome,
+                    login,
+                    senha,
+                    cpf,
+                    rg,
+                    telefone,
+                    trabalho,
+                    escolaridade,
+                    curso,
+                    nomePai,
+                    nomeMae,
+                    observacoes,
+                    true);
 
-        pacienteRepository.adicionar(paciente);
-        System.out.println("Paciente cadastrado com sucesso!");
+            pacienteRepository.adicionar(paciente);
+            System.out.println("Paciente cadastrado com sucesso!");
+        } catch (Exception e) {
+            System.out.println("\n\tErro ao cadastrar paciente.\n");
+        }
     }
 
     /**
@@ -186,23 +209,27 @@ public class Menu {
      */
     public void listarPacientes() {
         List<Paciente> pacientes = pacienteRepository.listar();
-        if (pacientes.isEmpty()) {
-            System.out.println("\n\tNenhum paciente cadastrado.\n");
-        }
-        for (Paciente paciente : pacientes) {
-            System.out.println("Lista de Paciente");
-            System.out.println(
-                    "\nID: " + paciente.getId() +
-                            "\nNome: " + paciente.getNome() +
-                            "\nCPF: " + paciente.getCpf() +
-                            "\nRG: " + paciente.getRg() +
-                            "\nTelefone: " + paciente.getTelefone() +
-                            "\nTrabalho: " + paciente.getTrabalho() +
-                            "\nEscolaridade: " + paciente.getEscolaridade() +
-                            "\nCurso: " + paciente.getCurso() +
-                            "\nNome do Pai: " + paciente.getNomePai() +
-                            "\nNome da mãe: " + paciente.getNomeMae() +
-                            "\nObservações: " + paciente.getObservacoes());
+        try {
+            if (pacientes.isEmpty()) {
+                System.out.println("\n\tNenhum paciente cadastrado.\n");
+            }
+            for (Paciente paciente : pacientes) {
+                System.out.println("Lista de Paciente");
+                System.out.println(
+                        "\nID: " + paciente.getId() +
+                                "\nNome: " + paciente.getNome() +
+                                "\nCPF: " + paciente.getCpf() +
+                                "\nRG: " + paciente.getRg() +
+                                "\nTelefone: " + paciente.getTelefone() +
+                                "\nTrabalho: " + paciente.getTrabalho() +
+                                "\nEscolaridade: " + paciente.getEscolaridade() +
+                                "\nCurso: " + paciente.getCurso() +
+                                "\nNome do Pai: " + paciente.getNomePai() +
+                                "\nNome da mãe: " + paciente.getNomeMae() +
+                                "\nObservações: " + paciente.getObservacoes());
+            }
+        } catch (Exception e) {
+            System.out.println("\n\tErro ao listar pacientes.\n");
         }
     }
 
@@ -213,18 +240,22 @@ public class Menu {
      */
     public void listarPsicologos() {
         List<Psicologo> psicologos = psicologoRepository.listar();
-        if (psicologos.isEmpty()) {
-            System.out.println("\n\tNenhum psicólogo cadastrado.\n");
-            return;
-        }
+        try {
+            if (psicologos.isEmpty()) {
+                System.out.println("\n\tNenhum psicólogo cadastrado.\n");
+                return;
+            }
 
-        System.out.println("Lista de Psicólogos:");
-        for (Psicologo psicologo : psicologos) {
-            System.out.println(
-                    "\nID: " + psicologo.getId() +
-                            "\nNome: " + psicologo.getNome() +
-                            "\nCRP: " + psicologo.getCrp() +
-                            "\nEspecialidade: " + psicologo.getEspecialidade());
+            System.out.println("Lista de Psicólogos:");
+            for (Psicologo psicologo : psicologos) {
+                System.out.println(
+                        "\nID: " + psicologo.getId() +
+                                "\nNome: " + psicologo.getNome() +
+                                "\nCRP: " + psicologo.getCrp() +
+                                "\nEspecialidade: " + psicologo.getEspecialidade());
+            }
+        } catch (Exception e) {
+            System.out.println("\n\tErro ao listar psicólogos.\n");
         }
     }
 
@@ -234,11 +265,15 @@ public class Menu {
      * sistema.
      */
     public void exportarPacientes() {
-        List<Paciente> pacientes = pacienteRepository.listar();
-        String diretorio = "../";
-        String nomeArquivo = "pacientes.txt";
+        try {
+            List<Paciente> pacientes = pacienteRepository.listar();
+            String diretorio = "../";
+            String nomeArquivo = "pacientes.txt";
 
-        PacienteExporter.exportarPacientesParaTxt(pacientes, nomeArquivo, diretorio);
+            PacienteExporter.exportarPacientesParaTxt(pacientes, nomeArquivo, diretorio);
+        } catch (Exception e) {
+            System.out.println("\n\tErro ao exportar pacientes.\n");
+        }
     }
 
     /**
@@ -249,8 +284,12 @@ public class Menu {
      *         repositório, caso contrário {@code false}
      */
     private boolean pacienteJaExiste(String cpf) {
-        return pacienteRepository.listar().stream()
-                .anyMatch(paciente -> paciente.getCpf().equals(cpf));
+        try {
+            return pacienteRepository.listar().stream()
+                    .anyMatch(paciente -> paciente.getCpf().equals(cpf));
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     /**
@@ -267,16 +306,20 @@ public class Menu {
      * Após a importação, é exibida uma mensagem de sucesso na consola.
      */
     public void importarPacientes() {
-        String nomeArquivo = "pacientes.txt";
-        String diretorio = "../";
+        try {
+            String nomeArquivo = "pacientes.txt";
+            String diretorio = "../";
 
-        for (Paciente novoPaciente : PacienteReader.lerPacientesDeTxt(nomeArquivo, diretorio)) {
-            if (!pacienteJaExiste(novoPaciente.getCpf())) {
-                pacienteRepository.adicionar(novoPaciente);
+            for (Paciente novoPaciente : PacienteReader.lerPacientesDeTxt(nomeArquivo, diretorio)) {
+                if (!pacienteJaExiste(novoPaciente.getCpf())) {
+                    pacienteRepository.adicionar(novoPaciente);
+                }
             }
+
+            System.out.println("\n\tPaciente(s) importado(s) com sucesso!\n");
+        } catch (Exception e) {
+            System.out.println("\n\tErro ao importar pacientes.\n");
         }
 
-        System.out.println("\n\tPaciente(s) importado(s) com sucesso!\n");
     }
-
 }
