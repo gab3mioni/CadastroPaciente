@@ -24,8 +24,13 @@ public class Psicologo extends Pessoa {
      */
     public Psicologo(int id, String nome, String login, String senha, String crp, String especialidade) {
         super(id, nome, login, senha);
-        PsicologoValidator.validarCrp(crp);
-        PsicologoValidator.validarEspecialidade(especialidade);
+        try {
+            PsicologoValidator.validarCrp(crp);
+            PsicologoValidator.validarEspecialidade(especialidade);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Dados inválidos", e);
+        }
+
         this.crp = crp;
         this.especialidade = especialidade;
     }
@@ -55,7 +60,12 @@ public class Psicologo extends Pessoa {
      * @throws IllegalArgumentException Se o CRP for inválido de acordo com a validação.
      */
     public void setCrp(String crp) {
-        PsicologoValidator.validarCrp(crp);
+        try {
+            PsicologoValidator.validarCrp(crp);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("CRP inválido", e);
+        }
+
         this.crp = crp;
     }
 
@@ -66,7 +76,12 @@ public class Psicologo extends Pessoa {
      * @throws IllegalArgumentException Se a especialidade for inválida de acordo com a validação.
      */
     public void setEspecialidade(String especialidade) {
-        PsicologoValidator.validarEspecialidade(especialidade);
+        try {
+            PsicologoValidator.validarEspecialidade(especialidade);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Especialidade inválida", e);
+        }
+
         this.especialidade = especialidade;
     }
 }

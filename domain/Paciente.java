@@ -2,6 +2,7 @@ package domain;
 
 import domain.Validator.PacienteValidator;
 import domain.Validator.PessoaValidator;
+import domain.Validator.ValidationException;
 
 /**
  * Representa um paciente, contendo informações pessoais e de contato.
@@ -57,19 +58,54 @@ public class Paciente extends Pessoa {
     ) {
         super(id, nome, login, senha);
 
-        // Valida os nomes dos pais
-        PessoaValidator.validarNome(nomePai);
-        PessoaValidator.validarNome(nomeMae);
+        try {
+            PessoaValidator.validarNome(nomePai);
+        } catch (ValidationException e) {
+            throw new IllegalArgumentException("Nome do pai inválido", e);
+        }
 
-        // Valida os dados pessoais do paciente
-        PacienteValidator.validarCpf(cpf);
-        PacienteValidator.validarRg(rg);
-        PacienteValidator.validarTelefone(telefone);
-        PacienteValidator.validarCampo(trabalho);
-        PacienteValidator.validarCampo(escolaridade);
-        PacienteValidator.validarCampo(curso);
+        try {
+            PessoaValidator.validarNome(nomeMae);
+        } catch (ValidationException e) {
+            throw new IllegalArgumentException("Nome da mãe inválido", e);
+        }
 
-        // Atribui os valores aos campos do paciente
+        try {
+            PacienteValidator.validarCpf(cpf);
+        } catch (ValidationException e) {
+            throw new IllegalArgumentException("CPF inválido", e);
+        }
+
+        try {
+            PacienteValidator.validarRg(rg);
+        } catch (ValidationException e) {
+            throw new IllegalArgumentException("RG inválido", e);
+        }
+
+        try {
+            PacienteValidator.validarTelefone(telefone);
+        } catch (ValidationException e) {
+            throw new IllegalArgumentException("Telefone inválido", e);
+        }
+
+        try {
+            PacienteValidator.validarCampo(trabalho);
+        } catch (ValidationException e) {
+            throw new IllegalArgumentException("Trabalho inválido", e);
+        }
+
+        try {
+            PacienteValidator.validarCampo(escolaridade);
+        } catch (ValidationException e) {
+            throw new IllegalArgumentException("Escolaridade inválida", e);
+        }
+
+        try {
+            PacienteValidator.validarCampo(curso);
+        } catch (ValidationException e) {
+            throw new IllegalArgumentException("Curso inválido", e);
+        }
+
         this.cpf = cpf;
         this.rg = rg;
         this.telefone = telefone;
@@ -181,7 +217,12 @@ public class Paciente extends Pessoa {
      * @throws IllegalArgumentException se o CPF for inválido.
      */
     public void setCpf(String cpf) {
-        PacienteValidator.validarCpf(cpf);
+        try {
+            PacienteValidator.validarCpf(cpf);
+        } catch (ValidationException e) {
+            throw new IllegalArgumentException("CPF inválido", e);
+        }
+
         this.cpf = cpf;
     }
 
@@ -192,7 +233,12 @@ public class Paciente extends Pessoa {
      * @throws IllegalArgumentException se o RG for inválido.
      */
     public void setRg(String rg) {
-        PacienteValidator.validarRg(rg);
+        try {
+            PacienteValidator.validarRg(rg);
+        } catch (ValidationException e) {
+            throw new IllegalArgumentException("RG inválido", e);
+        }
+
         this.rg = rg;
     }
 
@@ -203,7 +249,12 @@ public class Paciente extends Pessoa {
      * @throws IllegalArgumentException se o telefone for inválido.
      */
     public void setTelefone(String telefone) {
-        PacienteValidator.validarTelefone(telefone);
+        try {
+            PacienteValidator.validarTelefone(telefone);
+        } catch (ValidationException e) {
+            throw new IllegalArgumentException("Telefone inválido", e);
+        }
+
         this.telefone = telefone;
     }
 
@@ -214,7 +265,12 @@ public class Paciente extends Pessoa {
      * @throws IllegalArgumentException se o trabalho for inválido.
      */
     public void setTrabalho(String trabalho) {
-        PacienteValidator.validarCampo(trabalho);
+        try {
+            PacienteValidator.validarCampo(trabalho);
+        } catch (ValidationException e) {
+            throw new IllegalArgumentException("Trabalho inválido", e);
+        }
+
         this.trabalho = trabalho;
     }
 
@@ -225,7 +281,12 @@ public class Paciente extends Pessoa {
      * @throws IllegalArgumentException se a escolaridade for inválida.
      */
     public void setEscolaridade(String escolaridade) {
-        PacienteValidator.validarCampo(escolaridade);
+        try {
+            PacienteValidator.validarCampo(escolaridade);
+        } catch (ValidationException e) {
+            throw new IllegalArgumentException("Escolaridade inválida", e);
+        }
+
         this.escolaridade = escolaridade;
     }
 
@@ -236,7 +297,12 @@ public class Paciente extends Pessoa {
      * @throws IllegalArgumentException se o curso for inválido.
      */
     public void setCurso(String curso) {
-        PacienteValidator.validarCampo(curso);
+        try {
+            PacienteValidator.validarCampo(curso);
+        } catch (ValidationException e) {
+            throw new IllegalArgumentException("Curso inválido", e);
+        }
+
         this.curso = curso;
     }
 
@@ -247,7 +313,12 @@ public class Paciente extends Pessoa {
      * @throws IllegalArgumentException se o nome do pai for inválido.
      */
     public void setNomePai(String nomePai) {
-        PessoaValidator.validarNome(nomePai);
+        try {
+            PessoaValidator.validarNome(nomePai);
+        } catch (ValidationException e) {
+            throw new IllegalArgumentException("Nome do pai inválido", e);
+        }
+
         this.nomePai = nomePai;
     }
 
@@ -258,7 +329,12 @@ public class Paciente extends Pessoa {
      * @throws IllegalArgumentException se o nome da mãe for inválido.
      */
     public void setNomeMae(String nomeMae) {
-        PessoaValidator.validarNome(nomeMae);
+        try {
+            PessoaValidator.validarNome(nomeMae);
+        } catch (ValidationException e) {
+            throw new IllegalArgumentException("Nome da mãe inválido", e);
+        }
+        
         this.nomeMae = nomeMae;
     }
 

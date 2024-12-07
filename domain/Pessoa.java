@@ -23,9 +23,13 @@ public class Pessoa {
      * @throws IllegalArgumentException Se qualquer um dos parâmetros for inválido de acordo com a validação.
      */
     public Pessoa(int id, String nome, String login, String senha) {
-        PessoaValidator.validarNome(nome);
-        PessoaValidator.validarLogin(login);
-        PessoaValidator.validarSenha(senha);
+        try {
+            PessoaValidator.validarNome(nome);
+            PessoaValidator.validarLogin(login);
+            PessoaValidator.validarSenha(senha);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Dados inválidos", e);
+        }
 
         this.id = id;
         this.nome = nome;
@@ -76,7 +80,12 @@ public class Pessoa {
      * @throws IllegalArgumentException Se o nome for inválido de acordo com a validação.
      */
     public void setNome(String nome) {
-        PessoaValidator.validarNome(nome);
+        try {
+            PessoaValidator.validarNome(nome);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Nome inválido", e);
+        }
+
         this.nome = nome;
     }
 
@@ -87,7 +96,12 @@ public class Pessoa {
      * @throws IllegalArgumentException Se o login for inválido de acordo com a validação.
      */
     public void setLogin(String login) {
-        PessoaValidator.validarLogin(login);
+        try {
+            PessoaValidator.validarLogin(login);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Login inválido", e);
+        }
+
         this.login = login;
     }
 
@@ -98,7 +112,12 @@ public class Pessoa {
      * @throws IllegalArgumentException Se a senha for inválida de acordo com a validação.
      */
     public void setSenha(String senha) {
-        PessoaValidator.validarSenha(senha);
+        try {
+            PessoaValidator.validarSenha(senha);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Senha inválida", e);
+        }
+
         this.senha = senha;
     }
 }
