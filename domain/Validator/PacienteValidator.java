@@ -11,11 +11,11 @@ public class PacienteValidator {
      * O CPF deve ter exatamente 11 dígitos, não pode ser nulo ou vazio.
      *
      * @param cpf o CPF a ser validado.
-     * @throws IllegalArgumentException se o CPF for nulo, vazio ou não tiver 11 dígitos.
+     * @throws ValidationException se o CPF for nulo, vazio ou não tiver 11 dígitos.
      */
-    public static void validarCpf(String cpf) {
+    public static void validarCpf(String cpf) throws ValidationException {
         if (cpf == null || cpf.trim().isEmpty() || cpf.length() != 11) {
-            throw new IllegalArgumentException("CPF deve ter 11 dígitos.");
+            throw new ValidationException("CPF deve ter 11 dígitos.");
         }
     }
 
@@ -24,11 +24,11 @@ public class PacienteValidator {
      * O RG deve ter exatamente 10 dígitos, não pode ser nulo ou vazio.
      *
      * @param rg o RG a ser validado.
-     * @throws IllegalArgumentException se o RG for nulo ou vazio.
+     * @throws ValidationException se o RG for nulo ou vazio.
      */
-    public static void validarRg(String rg) {
+    public static void validarRg(String rg) throws ValidationException {
         if (rg == null || rg.trim().isEmpty()) {
-            throw new IllegalArgumentException("RG não pode ser vazio.");
+            throw new ValidationException("RG não pode ser vazio.");
         }
     }
 
@@ -37,11 +37,11 @@ public class PacienteValidator {
      * O telefone deve ter exatamente 11 dígitos, não pode ser nulo ou vazio.
      *
      * @param telefone o telefone a ser validado.
-     * @throws IllegalArgumentException se o telefone for nulo, vazio ou não tiver 11 dígitos.
+     * @throws ValidationException se o telefone for nulo, vazio ou não tiver 11 dígitos.
      */
-    public static void validarTelefone(String telefone) {
+    public static void validarTelefone(String telefone) throws ValidationException {
         if (telefone == null || telefone.trim().isEmpty() || telefone.length() != 11) {
-            throw new IllegalArgumentException("Telefone inválido.");
+            throw new ValidationException("Telefone inválido.");
         }
     }
 
@@ -49,11 +49,11 @@ public class PacienteValidator {
      * Valida se um campo genérico não é nulo nem vazio.
      *
      * @param campo o campo a ser validado.
-     * @throws IllegalArgumentException se o campo for nulo ou vazio.
+     * @throws ValidationException se o campo for nulo ou vazio.
      */
-    public static void validarCampo(String campo) {
+    public static void validarCampo(String campo) throws ValidationException {
         if (campo == null || campo.trim().isEmpty()) {
-            throw new IllegalArgumentException("O campo não pode ser vazio.");
+            throw new ValidationException("O campo não pode ser vazio.");
         }
     }
 }

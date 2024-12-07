@@ -11,11 +11,11 @@ public class PsicologoValidator {
      * O CRP não pode ser nulo, vazio e deve ter exatamente 8 caracteres.
      *
      * @param crp o CRP a ser validado.
-     * @throws IllegalArgumentException se o CRP for nulo, vazio ou não tiver 8 caracteres.
+     * @throws ValidationException se o CRP for nulo, vazio ou não tiver 8 caracteres.
      */
-    public static void validarCrp(String crp) {
+    public static void validarCrp(String crp) throws ValidationException {
         if (crp == null || crp.trim().isEmpty() || crp.length() != 8) {
-            throw new IllegalArgumentException("CRP não pode ser vazio.");
+            throw new ValidationException("CRP não pode ser vazio.");
         }
     }
 
@@ -24,11 +24,11 @@ public class PsicologoValidator {
      * A especialidade não pode ser nula nem vazia.
      *
      * @param especialidade a especialidade a ser validada.
-     * @throws IllegalArgumentException se a especialidade for nula ou vazia.
+     * @throws ValidationException se a especialidade for nula ou vazia.
      */
-    public static void validarEspecialidade(String especialidade) {
+    public static void validarEspecialidade(String especialidade) throws ValidationException {
         if (especialidade == null || especialidade.trim().isEmpty()) {
-            throw new IllegalArgumentException("Especialidade não pode ser vazia.");
+            throw new ValidationException("Especialidade não pode ser vazia.");
         }
     }
 }

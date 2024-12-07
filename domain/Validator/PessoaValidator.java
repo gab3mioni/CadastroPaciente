@@ -10,11 +10,11 @@ public class PessoaValidator {
      * Valida se o nome é válido, ou seja, não é nulo nem vazio.
      *
      * @param nome o nome a ser validado.
-     * @throws IllegalArgumentException se o nome for nulo ou vazio.
+     * @throws ValidationException se o nome for nulo ou vazio.
      */
-    public static void validarNome(String nome) {
+    public static void validarNome(String nome) throws ValidationException {
         if (nome == null || nome.trim().isEmpty()) {
-            throw new IllegalArgumentException("Nome não pode ser vazio.");
+            throw new ValidationException("Nome não pode ser vazio.");
         }
     }
 
@@ -22,11 +22,11 @@ public class PessoaValidator {
      * Valida se o login é válido, ou seja, não é nulo nem vazio.
      *
      * @param login o login a ser validado.
-     * @throws IllegalArgumentException se o login for nulo ou vazio.
+     * @throws ValidationException se o login for nulo ou vazio.
      */
-    public static void validarLogin(String login) {
+    public static void validarLogin(String login) throws ValidationException {
         if (login == null || login.trim().isEmpty()) {
-            throw new IllegalArgumentException("Login não pode ser vazio.");
+            throw new ValidationException("Login não pode ser vazio.");
         }
     }
 
@@ -37,22 +37,22 @@ public class PessoaValidator {
      * - Deve conter pelo menos uma letra maiúscula, um número e um caractere especial.
      *
      * @param senha a senha a ser validada.
-     * @throws IllegalArgumentException se a senha for nula, vazia, menor que 8 caracteres
+     * @throws ValidationException se a senha for nula, vazia, menor que 8 caracteres
      *                                  ou não atender aos critérios de segurança.
      */
-    public static void validarSenha(String senha) {
+    public static void validarSenha(String senha) throws ValidationException {
         if (senha == null || senha.trim().isEmpty()) {
-            throw new IllegalArgumentException("Senha não pode ser vazia.");
+            throw new ValidationException("Senha não pode ser vazia.");
         }
 
         if (senha.length() < 8) {
-            throw new IllegalArgumentException("A senha deve ter pelo menos 8 caracteres.");
+            throw new ValidationException("A senha deve ter pelo menos 8 caracteres.");
         }
 
         String regex = "^(?=.*[A-Z])(?=.*[0-9])(?=.*[\\W_])(?=\\S+$).{8,}$";
 
         if (!senha.matches(regex)) {
-            throw new IllegalArgumentException("A senha deve conter pelo menos uma letra maiúscula, um número e um caractere especial.");
+            throw new ValidationException("A senha deve conter pelo menos uma letra maiúscula, um número e um caractere especial.");
         }
     }
 }
