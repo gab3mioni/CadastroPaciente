@@ -103,3 +103,4 @@ java CadastroPaciente
 - **Cadastrar Paciente:** Insira as informações solicitadas
 - **Listar Pacientes:** Visualize a lista de pacientes cadastrados.
 - **Exportar Pacientes:** Gera um arquivo `.txt` contendo os dados dos pacientes.
+- **Importar Pacientes:** Realiza leitura de um arquivo `.txt`, adicionando ao sistema os dados dos pacientes não existentes.
