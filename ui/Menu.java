@@ -310,6 +310,13 @@ public class Menu {
 
             for (Paciente novoPaciente : PacienteReader.lerPacientesDeTxt(nomeArquivo, diretorio)) {
                 if (!pacienteJaExiste(novoPaciente.getCpf())) {
+                    boolean idEmUso = pacienteRepository.listar().stream()
+                            .anyMatch(paciente -> paciente.getId() == novoPaciente.getId());
+
+                    if (idEmUso) {
+                        int novoId = pacienteRepository.getProximoId();
+                        novoPaciente.setId(novoId);
+                    }
                     pacienteRepository.adicionar(novoPaciente);
                 }
             }
