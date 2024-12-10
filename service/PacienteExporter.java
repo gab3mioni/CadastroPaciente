@@ -33,11 +33,9 @@ public class PacienteExporter {
         String diretorio
         ) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(diretorio + nomeArquivo))) {
-            // Se a lista de pacientes estiver vazia, escreve uma mensagem no arquivo.
             if (pacientes.isEmpty()) {
                 writer.write("Nenhum paciente cadastrado.");
             } else {
-                // Caso contrário, escreve as informações de cada paciente.
                 for (Paciente paciente : pacientes) {
                     writer.write("ID: " + paciente.getId() + "\n");
                     writer.write("Nome: " + paciente.getNome() + "\n");
@@ -54,10 +52,8 @@ public class PacienteExporter {
                     writer.write("\n----------------------------------\n");
                 }
             }
-            // Mensagem de sucesso após a exportação
             System.out.println("Lista de pacientes exportada com sucesso para o arquivo: " + nomeArquivo);
         } catch (IOException e) {
-            // Exibe erro caso algo aconteça durante a exportação
             System.err.println("Erro ao exportar pacientes para o arquivo: " + e.getMessage());
         }
     }
