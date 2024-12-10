@@ -115,7 +115,7 @@ public class Menu {
                 System.out.print("\n\tEscolha uma opção: ");
                 opcao = leia.nextInt();
 
-                // leia.nextLine();
+                leia.nextLine();
 
                 switch (opcao) {
                     case 1 -> cadastrarPaciente(leia);
@@ -130,8 +130,6 @@ public class Menu {
                 leia = new Scanner(System.in);
             }
         } while (opcao != 5);
-
-        leia.close();
     }
 
     /**
@@ -320,6 +318,5 @@ public class Menu {
         } catch (Exception e) {
             System.out.println("\n\tErro ao importar pacientes.\n");
         }
-
     }
 }
