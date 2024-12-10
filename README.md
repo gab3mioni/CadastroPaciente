@@ -97,6 +97,7 @@ CadastroPaciente/
 ```bash
 java CadastroPaciente
 ```
+3. Insira as credenciais de login pré-definidas como `user:` janaina e `password:` senhaTeste123@.
 
 ### **Passo 5: Testar funcionalidades**
 
