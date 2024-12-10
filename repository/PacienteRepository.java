@@ -21,7 +21,11 @@ public class PacienteRepository implements InterfaceRepository<Paciente> {
      */
     @Override
     public void adicionar(Paciente paciente) {
-        pacientes.add(paciente);
+        try {
+            pacientes.add(paciente);
+        } catch (Exception e) {
+            System.out.println("Erro ao adicionar um paciente.");
+        }
     }
 
     /**
