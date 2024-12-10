@@ -8,7 +8,7 @@ import domain.Validator.PessoaValidator;
  */
 public class Pessoa {
 
-    private final int id;
+    private int id;
     private String nome;
     private String login;
     private String senha;
@@ -71,6 +71,15 @@ public class Pessoa {
      */
     public String getSenha() {
         return senha;
+    }
+
+    public void setId(int id) {
+        try {
+            PessoaValidator.validarId(id);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("ID inválido", e);
+        }
+        this.id = id;
     }
 
     /**

@@ -7,6 +7,19 @@ package domain.Validator;
 public class PessoaValidator {
 
     /**
+     * Valida se o ID é um número positivo.
+     * 
+     * @param id a ser validado
+     * @throws ValidationException se o id for menor ou igual a zero ou vazio.
+     */
+
+    public static void validarId(int id) throws ValidationException {
+        if (id <= 0) {
+            throw new ValidationException("ID deve ser um número positivo.");
+        }
+    }
+
+    /**
      * Valida se o nome é válido, ou seja, não é nulo nem vazio.
      *
      * @param nome o nome a ser validado.
